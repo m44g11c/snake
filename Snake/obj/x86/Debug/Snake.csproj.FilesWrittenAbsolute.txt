@@ -1,0 +1,5 @@
+/media/0298082898081D33/Workspace/snake/Snake/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/media/0298082898081D33/Workspace/snake/Snake/bin/Debug/Snake.exe.mdb
+/media/0298082898081D33/Workspace/snake/Snake/bin/Debug/Snake.exe
+/media/0298082898081D33/Workspace/snake/Snake/obj/x86/Debug/Snake.exe
+/media/0298082898081D33/Workspace/snake/Snake/obj/x86/Debug/Snake.exe.mdb
