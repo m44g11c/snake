@@ -7,8 +7,6 @@ namespace Snake
 		public static void Main (string[] args)
 		{
 
-
-
 			HorizontalLine upLine = new HorizontalLine (0, 78, 0, '#');
 			upLine.Drow ();
 			VerticalLine leftLine = new VerticalLine (0, 23, 0, '#');
@@ -17,6 +15,10 @@ namespace Snake
 			downLine.Drow ();
 			VerticalLine rightLine = new VerticalLine (0, 23, 78, '#');
 			rightLine.Drow ();
+
+			Point p = new Point (4, 5, '*');
+			Snake snake = new Snake (p, 4, Direction.RIGHT);
+			snake.Drow ();
 
 			Console.ReadLine ();
 		}
