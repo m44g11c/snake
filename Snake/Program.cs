@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Snake
 {
@@ -7,44 +8,64 @@ namespace Snake
 		public static void Main (string[] args)
 		{
 
-			HorizontalLine upLine = new HorizontalLine (0, 78, 0, '#');
-			upLine.Drow ();
-			VerticalLine leftLine = new VerticalLine (0, 23, 0, '#');
-			leftLine.Drow ();
-			HorizontalLine downLine = new HorizontalLine (0, 78, 23, '#');
-			downLine.Drow ();
-			VerticalLine rightLine = new VerticalLine (0, 23, 78, '#');
-			rightLine.Drow ();
+			Walls walls = new Walls( 79, 24 );
+			walls.Draw();
 
-			Point p = new Point (4, 5, '*');
-			Snake snake = new Snake (p, 4, Direction.RIGHT);
-			snake.Drow ();
+			// Отрисовка точек			
+			Point p = new Point( 4, 5, '*' );
+			Snake snake = new Snake( p, 4, Direction.RIGHT );
+			snake.Draw();
 
-			FoodCreator foodCreator = new FoodCreator (77, 22, '$');
-			Point food = foodCreator.CreateFood ();
-			food.Draw ();
+			FoodCreator foodCreator = new FoodCreator( 77, 22, '$' );
+			Point food = foodCreator.CreateFood();
+			food.Draw();
 
-			while (true) {
-
-				if (snake.Eat (food)) {
-					food = foodCreator.CreateFood ();
-					food.Draw ();
-				} else {
-					snake.Move ();
-				}
-
-				System.Threading.Thread.Sleep(200);
-
-				if(Console.KeyAvailable)
+			while (true)
+			{
+				if ( walls.IsHit(snake) || snake.IsHitTail() )
 				{
-					ConsoleKeyInfo key = Console.ReadKey ();
-					snake.HandleKey (key.Key);
-			
+					break;
+				}
+				if(snake.Eat( food ) )
+				{
+					food = foodCreator.CreateFood();
+					food.Draw();
+				}
+				else
+				{
+					snake.Move();
 				}
 
+				Thread.Sleep( 100 );
+				if ( Console.KeyAvailable )
+				{
+					ConsoleKeyInfo key = Console.ReadKey();
+					snake.HandleKey( key.Key );
+				}
 			}
+			WriteGameOver();
+			Console.ReadLine();
+		}
 
-			Console.ReadLine ();
+
+		static void WriteGameOver()
+		{
+			int xOffset = 25;
+			int yOffset = 8;
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.SetCursorPosition( xOffset, yOffset++ );
+			WriteText( "============================", xOffset, yOffset++ );
+			WriteText( "И Г Р А    О К О Н Ч Е Н А", xOffset + 1, yOffset++ );
+			yOffset++;
+			WriteText( "Автор: M4g1c", xOffset + 2, yOffset++ );
+			WriteText( "", xOffset + 1, yOffset++ );
+			WriteText( "============================", xOffset, yOffset++ );
+		}
+
+		static void WriteText( String text, int xOffset, int yOffset )
+		{
+			Console.SetCursorPosition( xOffset, yOffset );
+			Console.WriteLine( text );
 		}
 	}
 }
